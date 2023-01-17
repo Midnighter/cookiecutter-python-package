@@ -1,0 +1,77 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling", "hatch-vcs"]
+
+[project]
+name = "{{ cookiecutter.project_slug }}"
+description = "{{ cookiecutter.project_short_description }}"
+authors = [
+    { name = "{{ cookiecutter.full_name }}", email = "{{ cookiecutter.email }}" }
+]
+maintainers = [
+    { name = "{{ cookiecutter.full_name }}", email = "{{ cookiecutter.email }}" }
+]
+license = "{{ cookiecutter.license }}"
+readme = {"file" = "README.md", "content-type" = "text/markdown"}
+requires-python = ">=3.8"
+# Please consult https://pypi.org/classifiers/ for a full list.
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    {%- if cookiecutter.license == "MIT" %}
+    "License :: OSI Approved :: MIT License",
+    {% elif cookiecutter.license == "BSD-3-Clause" %}
+    "License :: OSI Approved :: BSD License",
+    {% elif cookiecutter.license == "Apache-2.0" %}
+    "License :: OSI Approved :: Apache Software License",
+    {% else %}
+    "License :: Other/Proprietary License",
+    {% endif -%}
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Bio-Informatics"
+]
+# TODO: add keywords
+keywords = []
+dynamic = ["version"]
+dependencies = [
+    "depinfo ~=2.2"
+]
+
+[project.urls]
+Homepage = "{{ cookiecutter.__dev_platform_url }}/{{ cookiecutter.dev_platform_username }}/{{ cookiecutter.project_slug }}"
+Documentation = "https://{{ cookiecutter.project_slug }}.readthedocs.io"
+"Source Code" = "{{ cookiecutter.__dev_platform_url }}/{{ cookiecutter.dev_platform_username }}/{{ cookiecutter.project_slug }}"
+"Bug Tracker" = "{{ cookiecutter.__dev_platform_url }}/{{ cookiecutter.dev_platform_username }}/{{ cookiecutter.project_slug }}/issues"
+Download = "https://pypi.org/project/{{ cookiecutter.project_slug }}/#files"
+
+[project.optional-dependencies]
+development = [
+    "pre-commit",
+    "tox ~=4.0"
+]
+
+[tool.hatch.build]
+packages = ["src/{{ cookiecutter.project_module }}"]
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/{{ cookiecutter.project_module }}/_version.py"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.black]
+line-length = 88
+python-version = ["py311"]
+
+[tool.isort]
+profile = "black"
+lines_after_imports = 2
+known_first_party = "{{ cookiecutter.project_module }}"
+skip = ["__init__.py"]
+

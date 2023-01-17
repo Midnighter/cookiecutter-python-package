@@ -1,0 +1,15 @@
+{
+  "full_name": "",
+  "email": "",
+  "dev_platform": ["GitHub", "GitLab"],
+  "__dev_platform_url": "https://{{ cookiecutter.dev_platform | lower }}.com",
+  "dev_platform_username": "",
+  "project_name": "Name of the project",
+  "project_slug": "{{ cookiecutter.project_name | to_kebab }}",
+  "project_module": "{{ cookiecutter.project_name | to_snake }}",
+  "project_short_description": "A short description of the project",
+  "license": ["MIT", "BSD-3-Clause", "Apache-2.0", "LicenseRef-Proprietary"],
+  "release_date": "{% now 'local' %}",
+  "year": "{{ cookiecutter.release_date[:4] }}",
+  "_extensions": ["jinja2_time.TimeExtension", "jinja2_strcase.StrcaseExtension"]
+}

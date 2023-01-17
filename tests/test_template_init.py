@@ -1,0 +1,96 @@
+# Copyright (c) 2022 Moritz E. Beber
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+"""Test the cookiecutter template initialization."""
+
+
+from datetime import date
+from pathlib import Path
+from typing import Dict
+
+import pytest
+from cookiecutter.main import cookiecutter
+
+
+TEMPLATE = Path(__file__).parents[1]
+
+
+@pytest.fixture(scope="module", params=["GitHub", "GitLab"])
+def dev_platform(request: pytest.FixtureRequest) -> str:
+    """Provide a recognized development platform."""
+    return request.param
+
+
+@pytest.fixture(
+    scope="module",
+    params=["MIT", "BSD-3-Clause", "Apache-2.0", "LicenseRef-Proprietary"],
+)
+def license(request: pytest.FixtureRequest) -> str:
+    """Provide a recognized license classification."""
+    return request.param
+
+
+@pytest.fixture(scope="function")
+def cookie_path(
+    tmp_path_factory: pytest.TempPathFactory, dev_platform: str, license: str
+) -> Path:
+    """Provide a cookiecutter working directory."""
+    return tmp_path_factory.mktemp("cookie") / dev_platform / license
+
+
+@pytest.fixture(scope="module")
+def cookie_context() -> Dict[str, str]:
+    """Provide a full project context."""
+    today = date.today()
+    return {
+        "full_name": "Rick Sanchez",
+        "email": "rick@galaxybrain.science",
+        "dev_platform_username": "rickprime",
+        "project_name": "Alien Clones",
+        "project_slug": "alien-clones",
+        "project_module": "alien_clones",
+        "project_short_description": "Wubba Lubba Dub-Dub",
+        "release_date": str(today),
+        "year": str(today.year),
+    }
+
+
+def test_init_template(
+    cookie_path: Path, cookie_context: Dict[str, str], dev_platform: str, license: str
+) -> None:
+    """Expect that the template can be initialized with any provided license."""
+    cookiecutter(
+        template=str(TEMPLATE),
+        no_input=True,
+        output_dir=cookie_path,
+        extra_context={
+            **cookie_context,
+            "dev_platform": dev_platform,
+            "license": license,
+        },
+    )
+    project_files = {
+        str(path.relative_to(cookie_path)) for path in cookie_path.rglob("*")
+    }
+    expected = {
+        "alien-clones",
+        "alien-clones/README.md",
+        "alien-clones/pyproject.toml",
+        "alien-clones/src",
+        "alien-clones/tests",
+    }
+    assert expected.issubset(project_files), expected.difference(project_files)
+    if license != "LicenseRef-Proprietary":
+        assert "alien-clones/LICENSE" in project_files

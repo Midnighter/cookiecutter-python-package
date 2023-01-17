@@ -1,0 +1,68 @@
+site_name: {{ cookiecutter.project_name }}
+site_description: {{ cookiecutter.project_short_description }}
+site_author: {{ cookiecutter.full_name }}
+site_url: https://{{ cookiecutter.project_slug }}.readthedocs.io/
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences:
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+theme:
+  features:
+    - content.code.annotate
+    - navigation.indexes
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: green
+      accent: light green
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: green
+      accent: light green
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_submodules: true
+            show_category_heading: true
+            show_if_no_docstring: true
+            show_signature_annotations: true
+      default_handler: python
+  - awesome-pages
+
+extra:
+  social:
+    - icon: fontawesome/brands/{{ cookiecutter.dev_platform | lower }}
+      link: {{ cookiecutter.__dev_platform_url }}/{{ cookiecutter.dev_platform_username }}
+      name: {{ cookiecutter.full_name }}
+
+copyright: Copyright &copy {{ cookiecutter.year }} {{ cookiecutter.full_name }}
+
+repo_url: {{ cookiecutter.__dev_platform_url }}/{{ cookiecutter.dev_platform_username }}/{{ cookiecutter.project_slug }}
+repo_name: {{ cookiecutter.dev_platform_username }}/{{ cookiecutter.project_slug }}
+
+watch:
+  - src/{{ cookiecutter.project_module }}
