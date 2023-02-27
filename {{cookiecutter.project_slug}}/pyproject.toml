@@ -72,6 +72,7 @@ python-version = ["py311"]
 [tool.isort]
 profile = "black"
 lines_after_imports = 2
+lines_before_imports = 2
 known_first_party = "{{ cookiecutter.project_module }}"
 skip = ["__init__.py"]
 
