@@ -91,4 +91,4 @@ def test_init_template(
     }
     assert expected.issubset(project_files), expected.difference(project_files)
     if license != "LicenseRef-Proprietary":
-        assert "alien-clones/LICENSE" in project_files
+        assert Path("alien-clones") / "LICENSE" in project_files
