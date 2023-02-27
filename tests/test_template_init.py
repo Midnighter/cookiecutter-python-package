@@ -81,15 +81,13 @@ def test_init_template(
             "license": license,
         },
     )
-    project_files = {
-        str(path.relative_to(cookie_path)) for path in cookie_path.rglob("*")
-    }
+    project_files = {path.relative_to(cookie_path) for path in cookie_path.rglob("*")}
     expected = {
-        "alien-clones",
-        "alien-clones/README.md",
-        "alien-clones/pyproject.toml",
-        "alien-clones/src",
-        "alien-clones/tests",
+        Path("alien-clones"),
+        Path("alien-clones") / "README.md",
+        Path("alien-clones") / "pyproject.toml",
+        Path("alien-clones") / "src",
+        Path("alien-clones") / "tests",
     }
     assert expected.issubset(project_files), expected.difference(project_files)
     if license != "LicenseRef-Proprietary":
