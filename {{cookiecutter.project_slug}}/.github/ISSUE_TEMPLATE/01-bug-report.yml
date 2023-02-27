@@ -1,5 +1,5 @@
 name: 🐞 Bug report
-about: Report a problem to help improve this project
+description: Report a problem to help improve this project
 title: "[BUG] "
 labels: [bug, triage]
 body:
