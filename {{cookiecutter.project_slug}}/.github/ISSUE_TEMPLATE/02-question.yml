@@ -1,0 +1,26 @@
+name: Question
+about: Ask a question
+title: "[Question] "
+labels: [question]
+body:
+  - type: checkboxes
+    attributes:
+      label: Checklist
+      description: >
+        To help keep this issue tracker clean and focused, please make sure that you have
+         tried *all* of the following resources before submitting your question.
+      options:
+        - label: I searched the [documentation](https://{{cookiecutter.project_slug}}.readthedocs.io).
+          required: true
+        - label: I looked through existing [discussion topics]({{ cookiecutter.__dev_platform_url }}/{{cookiecutter.dev_platform_username}}/{{cookiecutter.project_slug}}/discussions).
+          required: true
+        - label: I looked for [similar issues]({{ cookiecutter.__dev_platform_url }}/{{cookiecutter.dev_platform_username}}/{{cookiecutter.project_slug}}/issues).
+          required: true
+        - label: I looked up my question/problem in a search engine.
+          required: true
+  - type: textarea
+    attributes:
+      label: Question
+      description: Please ask your question
+    validations:
+      required: true
