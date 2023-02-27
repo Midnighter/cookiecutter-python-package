@@ -16,23 +16,30 @@
     git init
     ```
 
-2. Commit all the files.
+2. Install the git pre-commit hooks using the `pre-commit` tool.
+
+    ```shell
+    pip install pre-commit
+    pre-commit install
+    ```
+
+3. Commit all the files.
 
     ```shell
     git add .
     git commit -m "chore: initialize project cookiecutter"
     ```
 
-3. Create a repository on `GitHub <https://github.com/>`_ if you haven't done
+4. Create a repository on [{{ cookiecutter.dev_platform }}]({{ cookiecutter.__dev_platform_url }}) if you haven't done
    so yet.
-4. Browse through the architecture decision records (``docs/adr``) if you want
+5. Browse through the architecture decision records (`docs/adr`) if you want
    to understand details of the package design.
-5. Remove this section from the readme and describe what your package is all
+6. Remove this section from the readme and describe what your package is all
    about.
-6. When you're ready to make a release, perform the following steps.
+7. When you're ready to make a release, perform the following steps.
 
-   1. On `GitHub <https://github.com/>`_ set the secure environment
-      variables ``PYPI_USERNAME`` and ``PYPI_PASSWORD`` to ``__token__`` and a respective PyPI API token.
+   1. On [{{ cookiecutter.dev_platform }}]({{ cookiecutter.__dev_platform_url }}) set the secure environment
+      variables `PYPI_USERNAME` and `PYPI_PASSWORD` to `__token__` and a respective PyPI API token.
    2. Tag your latest commit with the desired version and let GitHub handle
       the release.
 
