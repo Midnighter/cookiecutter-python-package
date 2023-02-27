@@ -38,7 +38,7 @@ jobs:
         python -m pip install tox tox-gh-actions
 
     - name: Test with tox
-      run: tox run --parallel auto --parallel-no-spinner -- --cov-report=xml
+      run: tox run-parallel --parallel auto --parallel-no-spinner -- --cov-report=xml
 
     - name: Report coverage
       shell: bash
