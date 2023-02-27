@@ -66,10 +66,3 @@
 
 
 """Provide top level symbols."""
-
-
-try:
-    from ._version import __version__, __version_tuple__
-except ModuleNotFoundError:
-    __version__ = "unknown"
-    __version_tuple__ = ("unknown",)
