@@ -36,5 +36,5 @@ def remove_github() -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(level="INFO", format="[%(levelname)s] %(message)s")
-    if "{{ cookiecutter.dev_platform }}" == "GitHub":
+    if "{{ cookiecutter.dev_platform }}" == "GitLab":
         remove_github()
