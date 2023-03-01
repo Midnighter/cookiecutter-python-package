@@ -1,6 +1,14 @@
+################################################################################
+# Build Configuration
+################################################################################
+
 [build-system]
 build-backend = "hatchling.build"
 requires = ["hatchling", "hatch-vcs"]
+
+################################################################################
+# Project Configuration
+################################################################################
 
 [project]
 name = "{{ cookiecutter.project_slug }}"
@@ -56,6 +64,10 @@ development = [
     "tox ~=4.0"
 ]
 
+################################################################################
+# Tool Configuration
+################################################################################
+
 [tool.hatch.build]
 packages = ["src/{{ cookiecutter.project_module }}"]
 
@@ -76,3 +88,24 @@ lines_before_imports = 2
 known_first_party = "{{ cookiecutter.project_module }}"
 skip = ["__init__.py"]
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["raises"]
+
+[tool.coverage.paths]
+source = [
+    "src/{{ cookiecutter.project_module }}",
+    "*/site-packages/{{ cookiecutter.project_module }}"
+]
+
+[tool.coverage.run]
+branch = true
+parallel = true
+
+[tool.coverage.report]
+exclude_lines = ["pragma: no cover"]
+precision = 2
+
+[tool.ruff]
+line-length = 88
+select = ["ALL"]
