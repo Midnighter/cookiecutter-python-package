@@ -52,6 +52,8 @@ jobs:
         python-version: ["3.11"]
     needs: test
     if: github.ref_type == "tag"
+    permissions:
+      contents: write
 
     steps:
     - uses: actions/checkout@v3
