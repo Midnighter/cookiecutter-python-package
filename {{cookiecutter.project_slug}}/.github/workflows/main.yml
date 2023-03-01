@@ -60,7 +60,7 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-          -
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools wheel
@@ -81,7 +81,7 @@ jobs:
       with:
         body: >
           Please see
-          {{ cookiecutter.__dev_platform_url }}/${{ github.repository }}/blob/${{ github.ref_name }}/CHANGELOG.rst
+          https://github.com/${{ github.repository }}/blob/${{ github.ref_name }}/CHANGELOG.md
           for the full release notes.
         draft: false
         prerelease: false
