@@ -69,10 +69,13 @@ development = [
 ################################################################################
 
 [tool.hatch.build]
+only-packages = true
+
+[tool.hatch.build.targets.wheel]
 packages = ["src/{{ cookiecutter.project_module }}"]
 
 [tool.hatch.build.hooks.vcs]
-version-file = "_version.py"
+version-file = "src/{{ cookiecutter.project_module }}/_version.py"
 
 [tool.hatch.version]
 source = "vcs"
@@ -80,6 +83,11 @@ source = "vcs"
 [tool.black]
 line-length = 88
 python-version = ["py311"]
+extend-exclude = '''
+(
+    _version.py
+)
+'''
 
 [tool.isort]
 profile = "black"
