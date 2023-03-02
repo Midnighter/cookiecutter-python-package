@@ -79,7 +79,7 @@ jobs:
         hatch publish --no-prompt
 
     - name: GH release
-      uses: softprops/action-gh-release@v0.1
+      uses: softprops/action-gh-release@v1
       with:
         body: >
           Please see
