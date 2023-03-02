@@ -14,8 +14,7 @@
 
 
 """Test the cookiecutter template initialization."""
-
-
+import subprocess
 from datetime import date
 from pathlib import Path
 from typing import Dict
@@ -92,3 +91,17 @@ def test_init_template(
     assert expected.issubset(project_files), expected.difference(project_files)
     if license != "LicenseRef-Proprietary":
         assert Path("alien-clones") / "LICENSE" in project_files
+
+
+def test_init_template_tests(cookie_path: Path, cookie_context: Dict[str, str]) -> None:
+    cookiecutter(
+        template=str(TEMPLATE),
+        no_input=True,
+        output_dir=cookie_path,
+        extra_context={
+            **cookie_context,
+            "dev_platform": "GitHub",
+            "license": "MIT",
+        },
+    )
+    subprocess.run(["tox"], cwd=cookie_path, check=True)
