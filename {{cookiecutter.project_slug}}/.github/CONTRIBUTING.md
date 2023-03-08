@@ -3,7 +3,9 @@
 Contributions are welcome, and they are greatly appreciated! Every little bit
 helps, and credit will always be given.
 
-You can contribute in many ways:
+## Example Contributions
+
+You can contribute in many ways, for example:
 
 * [Report bugs](#report-bugs)
 * [Fix Bugs](#fix-bugs)
@@ -11,14 +13,14 @@ You can contribute in many ways:
 * [Write Documentation](#write-documentation)
 * [Submit Feedback](#submit-feedback)
 
-## Report Bugs
+### Report Bugs
 
 Report bugs at {{ cookiecutter.__dev_platform_url }}/{{cookiecutter.dev_platform_username}}/{{cookiecutter.project_slug}}/issues.
 
 **If you are reporting a bug, please follow the template guidelines. The more
 detailed your report, the easier and thus faster we can help you.**
 
-## Fix Bugs
+### Fix Bugs
 
 Look through the GitHub issues for bugs. Anything labelled with `bug` and `help
 wanted` is open to whoever wants to implement it. When you decide to work on
@@ -28,7 +30,7 @@ and add a comment that you'll be working on that, too. If you see another issue
 without the `help wanted` label, just post a comment, the maintainers are
 usually happy for any support that they can get.
 
-## Implement Features
+### Implement Features
 
 Look through the GitHub issues for features. Anything labelled with
 `enhancement` and `help wanted` is open to whoever wants to implement it. As for
@@ -38,7 +40,7 @@ and add a comment that you'll be working on that, too. If another enhancement
 catches your fancy, but it doesn't have the `help wanted` label, just post a
 comment, the maintainers are usually happy for any support that they can get.
 
-## Write Documentation
+### Write Documentation
 
 {{ cookiecutter.project_name }} could always use more documentation, whether as
 part of the official documentation, in docstrings, or even on the web in blog
@@ -47,7 +49,7 @@ cookiecutter.__dev_platform_url }}/{{ cookiecutter.dev_platform_username }}/{{
 cookiecutter.project_slug }}/issues) to let us know what you will be working on
 so that we can provide you with guidance.
 
-## Submit Feedback
+### Submit Feedback
 
 The best way to send feedback is to file an issue at {{
 cookiecutter.__dev_platform_url }}/{{ cookiecutter.dev_platform_username }}/{{
@@ -119,7 +121,7 @@ local development.
 
     ```shell
     git add .
-    git commit -m "fix: Your summary of changes"
+    git commit -m "fix: summarize your changes"
     git push origin fix-name-of-your-bugfix
     ```
 
