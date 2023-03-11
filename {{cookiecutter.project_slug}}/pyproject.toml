@@ -59,7 +59,10 @@ Documentation = "https://{{ cookiecutter.project_slug }}.readthedocs.io"
 Download = "https://pypi.org/project/{{ cookiecutter.project_slug }}/#files"
 
 [project.optional-dependencies]
-development = [
+dev = [
+    "mkdocs-material ~=9.1",
+    "mkdocstrings[python] ~=0.20",
+    "mkdocs-awesome-pages-plugin ~=2.8",
     "pre-commit",
     "tox ~=4.0"
 ]
