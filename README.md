@@ -27,7 +27,7 @@ Now you are ready to create your project by answering the template questions
 that follow.
 
 ```shell
-cruft create https://github.com/opencobra/cookiecutter-python-package
+cruft create https://github.com/Midnighter/cookiecutter-python-package
 ```
 
 The cookiecutter project itself is provided under the [Apache Software License
