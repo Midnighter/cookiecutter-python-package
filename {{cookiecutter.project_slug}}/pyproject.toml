@@ -42,6 +42,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Scientific/Engineering :: Bio-Informatics"
 ]
 # TODO: add keywords
@@ -85,19 +86,12 @@ source = "vcs"
 
 [tool.black]
 line-length = 88
-python-version = ["py311"]
+python-version = ["py312"]
 extend-exclude = '''
 (
     _version.py
 )
 '''
-
-[tool.isort]
-profile = "black"
-lines_after_imports = 2
-lines_before_imports = 2
-known_first_party = "{{ cookiecutter.project_module }}"
-skip = ["__init__.py"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -120,3 +114,30 @@ precision = 2
 [tool.ruff]
 line-length = 88
 select = ["ALL"]
+ignore = [
+    "D107",  # 'Missing docstring in __init__' ignored because pydoclint wants us to document the class instead.
+    "D203",  # '1 blank line required before class docstring' ignored because we want no blank line.
+    "D212",  # 'Multi-line docstring summary should start at the first line' ignored because we want the summary to start on the second line.
+    "D407",  # 'Missing dashed underline after section' ignored because Google style docstrings don't underline.
+    "ANN101",  # 'Missing type annotation for {self} in method'
+    "ANN102",  # 'Missing type annotation for {cls} in classmethod'
+]
+
+[tool.ruff.extend-per-file-ignores]
+"__init__.py" = [
+    "E401",  # 'Multiple imports on one line'
+    "E402",  # 'Module level import not at top of file'
+    "F401",  # 'Imported but unused'
+    "I001",  # 'Import block is un-sorted or un-formatted' ignored because we may have to import in a particular, not-alphabetical order.
+]
+
+[tool.ruff.lint.isort]
+case-sensitive = true
+known-first-party = "{{ cookiecutter.project_module }}"
+lines-after-imports = 2
+
+[tool.pydoclint]
+style = "google"  # TODO: Other styles are possible here.
+arg-type-hints-in-docstrings = false
+check-return-types = false
+check-yield-types = false
