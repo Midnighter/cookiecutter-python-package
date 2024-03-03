@@ -60,9 +60,9 @@ Download = "https://pypi.org/project/{{ cookiecutter.project_slug }}/#files"
 
 [project.optional-dependencies]
 dev = [
-    "mkdocs-material ~=9.1",
-    "mkdocstrings[python] ~=0.20",
-    "mkdocs-awesome-pages-plugin ~=2.8",
+    "mkdocs-material ~=9.5",
+    "mkdocstrings[python] ~=0.24",
+    "mkdocs-awesome-pages-plugin ~=2.9",
     "pre-commit",
     "tox ~=4.0"
 ]
