@@ -144,6 +144,6 @@ lines-after-imports = 2
 
 [tool.pydoclint]
 style = "google"  # TODO: Other styles are possible here.
-arg-type-hints-in-docstrings = false
+arg-type-hints-in-docstring = false
 check-return-types = false
 check-yield-types = false
