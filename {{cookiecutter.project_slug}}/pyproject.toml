@@ -139,7 +139,7 @@ ignore = [
 
 [tool.ruff.lint.isort]
 case-sensitive = true
-known-first-party = "{{ cookiecutter.project_module }}"
+known-first-party = ["{{ cookiecutter.project_module }}"]
 lines-after-imports = 2
 
 [tool.pydoclint]
