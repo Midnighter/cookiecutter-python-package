@@ -112,6 +112,8 @@ precision = 2
 
 [tool.ruff]
 line-length = 88
+
+[tool.ruff.lint]
 select = ["ALL"]
 ignore = [
     "D107",  # 'Missing docstring in __init__' ignored because pydoclint wants us to document the class instead.
@@ -124,7 +126,7 @@ ignore = [
     "ANN102",  # 'Missing type annotation for {cls} in classmethod'.
 ]
 
-[tool.ruff.extend-per-file-ignores]
+[tool.ruff.lint.extend-per-file-ignores]
 "__init__.py" = [
     "E401",  # 'Multiple imports on one line'
     "E402",  # 'Module level import not at top of file'
