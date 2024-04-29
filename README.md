@@ -18,7 +18,7 @@ updates](https://cruft.github.io/cruft/#updating-a-project) to the template. If
 you are using a conda environment, please use `conda` instead of `pip`.
 
 ```shell
-pip install cruft jinja2-strcase
+pip install cruft jinja2-strcase jinja2-time
 ```
 
 ### Create
