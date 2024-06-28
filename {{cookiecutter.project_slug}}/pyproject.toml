@@ -241,4 +241,7 @@ extra-dependencies = [
 python = ["3.10", "3.11", "3.12"]
 
 [tool.hatch.envs.test.scripts]
-run = "pytest --cov={{ cookiecutter.project_module }} --cov-report=term-missing {args}"
+run = [
+    "pip install .",
+    "pytest --cov={{ cookiecutter.project_module }} --cov-report=term-missing {args}",
+]
