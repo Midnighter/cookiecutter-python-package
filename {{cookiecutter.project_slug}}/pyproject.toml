@@ -60,11 +60,8 @@ Download = "https://pypi.org/project/{{ cookiecutter.project_slug }}/#files"
 
 [project.optional-dependencies]
 dev = [
-    "mkdocs-material ~=9.5",
-    "mkdocstrings[python] ~=0.24",
-    "mkdocs-awesome-pages-plugin ~=2.9",
+    "hatch",
     "pre-commit",
-    "tox ~=4.0"
 ]
 
 ################################################################################
@@ -141,7 +138,7 @@ ignore = [
 
 [tool.ruff.lint.isort]
 case-sensitive = true
-known-first-party = ["{{ cookiecutter.project_module }}"]
+known-first-party = ["src", "{{ cookiecutter.project_module }}"]
 lines-after-imports = 2
 
 [tool.pydoclint]
@@ -167,3 +164,81 @@ check-yield-types = false
 #init_forbid_extra = true
 #init_typed = true
 #warn_required_dynamic_aliases = true
+
+################################################################################
+# Hatch Environments
+################################################################################
+
+[tool.hatch.envs.style]
+description = """Check the style of the codebase."""
+dependencies = [
+    "pydoclint",
+    "ruff",
+]
+detached = true
+
+[tool.hatch.envs.style.scripts]
+docstrings = "pydoclint"
+code = "ruff check"
+check = ["docstrings", "code"]
+
+[tool.hatch.envs.safety]
+description = """Check dependencies for security vulnerabilities."""
+extra-dependencies = [
+    "safety",
+]
+
+[tool.hatch.envs.safety.scripts]
+check = ["safety check --full-report"]
+
+[tool.hatch.envs.types]
+description = """Check the static types of the codebase."""
+dependencies = [
+    "mypy",
+]
+
+[tool.hatch.envs.types.scripts]
+check = ["mypy src/{{ cookiecutter.project_module }}"]
+
+[tool.hatch.envs.docs]
+description = """Build or serve the documentation."""
+extra-dependencies = [
+    "mkdocs-material ~=9.5",
+    "mkdocstrings[python] ~=0.24",
+    "mkdocs-awesome-pages-plugin ~=2.9",
+]
+
+[tool.hatch.envs.docs.scripts]
+build = "mkdocs build --clean --strict"
+serve = "mkdocs serve"
+
+[tool.hatch.envs.install]
+description = """Test the installation the package."""
+dependencies = [
+    "pip",
+    "twine",
+]
+
+[tool.hatch.envs.install.scripts]
+check = [
+    "pip check",
+    "hatch build",
+    "twine check dist/*",
+]
+
+[tool.hatch.envs.test]
+description = """Run the test suite."""
+dev-mode = false
+extra-dependencies = [
+    "pytest",
+    "pytest-cov",
+    "pytest-raises",
+    "pytest-randomly",
+    "pytest-xdist",
+]
+
+[[tool.hatch.envs.test.matrix]]
+python = ["3.10", "3.11", "3.12"]
+
+[tool.hatch.envs.test.scripts]
+run = "pytest --cov={{ cookiecutter.project_module }} --cov-report=term-missing {args}"
