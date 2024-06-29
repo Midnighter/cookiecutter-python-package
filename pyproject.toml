@@ -2,32 +2,12 @@
 # Tool Configuration
 ################################################################################
 
-[tool.hatch.envs.default]
-skip-install = true
-
-[tool.hatch.envs.test]
-description = """
-Test the instantiation of the cookiecutter template and run its test suite.
-"""
-dependencies = [
-    "cookiecutter",
-    "jinja2-strcase",
-    "jinja2-time",
-    "pytest",
-]
-
-[[tool.hatch.envs.test.matrix]]
-python = ["3.8", "3.12"]
-
-[tool.hatch.envs.test.scripts]
-run = "pytest {args}"
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-
 [tool.black]
 line-length = 88
 target-version = ["py312"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
 
 [tool.ruff]
 line-length = 88
@@ -60,3 +40,27 @@ ignore = [
 [tool.ruff.lint.isort]
 case-sensitive = true
 lines-after-imports = 2
+
+################################################################################
+# Hatch Environments
+################################################################################
+
+[tool.hatch.envs.default]
+skip-install = true
+
+[tool.hatch.envs.test]
+description = """
+Test the instantiation of the cookiecutter template and run its test suite.
+"""
+dependencies = [
+    "cookiecutter",
+    "jinja2-strcase",
+    "jinja2-time",
+    "pytest",
+]
+
+[[tool.hatch.envs.test.matrix]]
+python = ["3.8", "3.12"]
+
+[tool.hatch.envs.test.scripts]
+run = "pytest {args}"
