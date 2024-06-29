@@ -113,31 +113,36 @@ def test_init_template_tests(cookie_path: Path, cookie_context: dict[str, str]) 
         },
     )
     project_dir = cookie_path / cookie_context["project_slug"]
-    subprocess.run(
-        ["hatch", "run", "install:check"],
-        cwd=project_dir,
-        check=True,
-        capture_output=True,
-        shell=True,
-    )
-    subprocess.run(
-        ["hatch", "run", "test:run"],
-        cwd=project_dir,
-        check=True,
-        capture_output=True,
-        shell=True,
-    )
-    subprocess.run(
-        ["hatch", "run", "docs:build"],
-        cwd=project_dir,
-        check=True,
-        capture_output=True,
-        shell=True,
-    )
-    subprocess.run(
-        ["hatch", "run", "style:check"],
-        cwd=project_dir,
-        check=True,
-        capture_output=True,
-        shell=True,
-    )
+    try:
+        subprocess.run(
+            ["hatch", "run", "install:check"],
+            cwd=project_dir,
+            check=True,
+            capture_output=True,
+            shell=True,
+        )
+        subprocess.run(
+            ["hatch", "run", "test:run"],
+            cwd=project_dir,
+            check=True,
+            capture_output=True,
+            shell=True,
+        )
+        subprocess.run(
+            ["hatch", "run", "docs:build"],
+            cwd=project_dir,
+            check=True,
+            capture_output=True,
+            shell=True,
+        )
+        subprocess.run(
+            ["hatch", "run", "style:check"],
+            cwd=project_dir,
+            check=True,
+            capture_output=True,
+            shell=True,
+        )
+    except subprocess.CalledProcessError as error:
+        print(error.stdout.decode())
+        print(error.stderr.decode())
+        raise
