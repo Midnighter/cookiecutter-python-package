@@ -51,7 +51,7 @@ project.
 
 ## Copyright
 
-* Copyright © 2022, Moritz E. Beber
+* Copyright © 2022-2024, Moritz E. Beber
 * Copyright © 2019-2022, openCOBRA
 * Free software distributed under the [Apache Software License
   2.0](https://www.apache.org/licenses/LICENSE-2.0)
