@@ -15,6 +15,7 @@
 
 """Test the cookiecutter template initialization."""
 
+
 from __future__ import annotations
 
 import datetime
@@ -100,7 +101,9 @@ def test_init_template(
         assert Path("alien-clones") / "LICENSE" in project_files
 
 
-def test_init_template_tests(cookie_path: Path, cookie_context: dict[str, str]) -> None:
+def test_init_template_tests(
+    cookie_path: Path, cookie_context: dict[str, str], monkeypatch: pytest.MonkeyPatch,
+) -> None:
     """Expect that the test suite passes for the initialized template."""
     cookiecutter(
         template=str(TEMPLATE),
@@ -112,30 +115,35 @@ def test_init_template_tests(cookie_path: Path, cookie_context: dict[str, str]) 
             "license": "MIT",
         },
     )
+    monkeypatch.chdir(cookie_path)
     subprocess.run(
         ["hatch", "run", "install:check"],
-        cwd=cookie_path,
+        # "hatch run install:check",
+        # cwd=cookie_path,
         check=True,
         capture_output=True,
         shell=True,
     )
     subprocess.run(
         ["hatch", "run", "test:run"],
-        cwd=cookie_path,
+        # "hatch run test:run",
+        # cwd=cookie_path,
         check=True,
         capture_output=True,
         shell=True,
     )
     subprocess.run(
         ["hatch", "run", "docs:build"],
-        cwd=cookie_path,
+        # "hatch run docs:build",
+        # cwd=cookie_path,
         check=True,
         capture_output=True,
         shell=True,
     )
     subprocess.run(
         ["hatch", "run", "style:check"],
-        cwd=cookie_path,
+        # "hatch run style:check",
+        # cwd=cookie_path,
         check=True,
         capture_output=True,
         shell=True,
