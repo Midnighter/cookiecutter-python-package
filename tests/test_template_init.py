@@ -14,10 +14,12 @@
 
 
 """Test the cookiecutter template initialization."""
+
+from __future__ import annotations
+
+import datetime
 import subprocess
-from datetime import date
 from pathlib import Path
-from typing import Dict
 
 import pytest
 from cookiecutter.main import cookiecutter
@@ -41,18 +43,20 @@ def license(request: pytest.FixtureRequest) -> str:
     return request.param
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture()
 def cookie_path(
-    tmp_path_factory: pytest.TempPathFactory, dev_platform: str, license: str
+    tmp_path_factory: pytest.TempPathFactory,
+    dev_platform: str,
+    license: str,
 ) -> Path:
     """Provide a cookiecutter working directory."""
     return tmp_path_factory.mktemp("cookie") / dev_platform / license
 
 
 @pytest.fixture(scope="module")
-def cookie_context() -> Dict[str, str]:
+def cookie_context() -> dict[str, str]:
     """Provide a full project context."""
-    today = date.today()
+    today = datetime.datetime.now(tz=datetime.timezone.utc).date()
     return {
         "full_name": "Rick Sanchez",
         "email": "rick@galaxybrain.science",
@@ -67,7 +71,10 @@ def cookie_context() -> Dict[str, str]:
 
 
 def test_init_template(
-    cookie_path: Path, cookie_context: Dict[str, str], dev_platform: str, license: str
+    cookie_path: Path,
+    cookie_context: dict[str, str],
+    dev_platform: str,
+    license: str,
 ) -> None:
     """Expect that the template can be initialized with any provided license."""
     cookiecutter(
@@ -93,7 +100,8 @@ def test_init_template(
         assert Path("alien-clones") / "LICENSE" in project_files
 
 
-def test_init_template_tests(cookie_path: Path, cookie_context: Dict[str, str]) -> None:
+def test_init_template_tests(cookie_path: Path, cookie_context: dict[str, str]) -> None:
+    """Expect that the test suite passes for the initialized template."""
     cookiecutter(
         template=str(TEMPLATE),
         no_input=True,
@@ -104,4 +112,31 @@ def test_init_template_tests(cookie_path: Path, cookie_context: Dict[str, str]) 
             "license": "MIT",
         },
     )
-    subprocess.run(["tox"], cwd=cookie_path, check=True)
+    subprocess.run(
+        ["hatch", "run", "install:check"],
+        cwd=cookie_path,
+        check=True,
+        capture_output=True,
+        shell=True,
+    )
+    subprocess.run(
+        ["hatch", "run", "test:run"],
+        cwd=cookie_path,
+        check=True,
+        capture_output=True,
+        shell=True,
+    )
+    subprocess.run(
+        ["hatch", "run", "docs:build"],
+        cwd=cookie_path,
+        check=True,
+        capture_output=True,
+        shell=True,
+    )
+    subprocess.run(
+        ["hatch", "run", "style:check"],
+        cwd=cookie_path,
+        check=True,
+        capture_output=True,
+        shell=True,
+    )
