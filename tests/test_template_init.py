@@ -20,6 +20,7 @@ from __future__ import annotations
 import datetime
 import os
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -137,7 +138,12 @@ def test_init_template_tests(cookie_path: Path, cookie_context: dict[str, str]) 
             shell=True,
         )
         subprocess.run(
-            ["hatch", "run", "test:run"],
+            [
+                "hatch",
+                "run",
+                f"+py={sys.version_info.major}.{sys.version_info.minor}",
+                "test:run",
+            ],
             cwd=project_dir,
             check=True,
             capture_output=True,
