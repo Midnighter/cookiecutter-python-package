@@ -21,7 +21,7 @@ maintainers = [
 ]
 license = "{{ cookiecutter.license }}"
 readme = {"file" = "README.md", "content-type" = "text/markdown"}
-requires-python = ">=3.10"
+requires-python = ">=3.8"
 # Please consult https://pypi.org/classifiers/ for a full list.
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
@@ -38,6 +38,8 @@ classifiers = [
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -82,7 +84,7 @@ source = "vcs"
 
 [tool.black]
 line-length = 88
-target-version = ["py310"]
+target-version = ["py312"]
 extend-exclude = '''
 (
     _version.py
@@ -238,7 +240,7 @@ extra-dependencies = [
 ]
 
 [[tool.hatch.envs.test.matrix]]
-python = ["3.10", "3.11", "3.12"]
+python = ["3.8", "3.12"]
 
 [tool.hatch.envs.test.scripts]
 run = [
