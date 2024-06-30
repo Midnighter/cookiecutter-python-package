@@ -18,11 +18,13 @@
 from __future__ import annotations
 
 import datetime
+import os
 import subprocess
 from pathlib import Path
 
 import pytest
 from cookiecutter.main import cookiecutter
+from git import Repo
 
 
 TEMPLATE = Path(__file__).parents[1]
@@ -112,7 +114,20 @@ def test_init_template_tests(cookie_path: Path, cookie_context: dict[str, str]) 
             "license": "MIT",
         },
     )
-    project_dir = cookie_path / cookie_context["project_slug"]
+    project_dir = (cookie_path / cookie_context["project_slug"]).resolve(strict=True)
+
+    # Initialize a git repository such that hatch-vcs can be used.
+    repo = Repo.init(project_dir)
+    repo.index.add(
+        [
+            Path(dirpath, name)
+            for dirpath, _, filenames in os.walk(project_dir)
+            for name in filenames
+        ],
+    )
+    repo.index.commit("chore: initialize cookiecutter template")
+
+    # Run the local test suite.
     try:
         subprocess.run(
             ["hatch", "run", "install:check"],
@@ -143,6 +158,6 @@ def test_init_template_tests(cookie_path: Path, cookie_context: dict[str, str]) 
             shell=True,
         )
     except subprocess.CalledProcessError as error:
-        print(error.stdout.decode())
-        print(error.stderr.decode())
+        print(error.stdout.decode())  # noqa: T201
+        print(error.stderr.decode())  # noqa: T201
         raise
