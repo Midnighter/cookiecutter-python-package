@@ -54,6 +54,7 @@ Test the instantiation of the cookiecutter template and run its test suite.
 """
 dependencies = [
     "cookiecutter",
+    "GitPython",
     "jinja2-strcase",
     "jinja2-time",
     "pytest",
