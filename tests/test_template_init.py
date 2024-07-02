@@ -18,6 +18,7 @@
 from __future__ import annotations
 
 import datetime
+import logging
 import os
 import subprocess
 import sys
@@ -29,6 +30,9 @@ from git import Repo
 
 
 TEMPLATE = Path(__file__).parents[1]
+
+
+logger = logging.getLogger(__name__)
 
 
 @pytest.fixture(scope="module", params=["GitHub", "GitLab"])
@@ -47,13 +51,12 @@ def license(request: pytest.FixtureRequest) -> str:
 
 
 @pytest.fixture()
-def cookie_path(
+def cookie_base_path(
     tmp_path_factory: pytest.TempPathFactory,
     dev_platform: str,
-    license: str,
 ) -> Path:
-    """Provide a cookiecutter working directory."""
-    return tmp_path_factory.mktemp("cookie") / dev_platform / license
+    """Provide a cookiecutter base working directory."""
+    return tmp_path_factory.mktemp("cookie") / dev_platform
 
 
 @pytest.fixture(scope="module")
@@ -74,23 +77,24 @@ def cookie_context() -> dict[str, str]:
 
 
 def test_init_template(
-    cookie_path: Path,
+    cookie_base_path: Path,
     cookie_context: dict[str, str],
     dev_platform: str,
     license: str,
 ) -> None:
     """Expect that the template can be initialized with any provided license."""
+    parent = cookie_base_path / license
     cookiecutter(
         template=str(TEMPLATE),
         no_input=True,
-        output_dir=cookie_path,
+        output_dir=parent,
         extra_context={
             **cookie_context,
             "dev_platform": dev_platform,
             "license": license,
         },
     )
-    project_files = {path.relative_to(cookie_path) for path in cookie_path.rglob("*")}
+    project_files = {path.relative_to(parent) for path in parent.rglob("*")}
     expected = {
         Path("alien-clones"),
         Path("alien-clones") / "README.md",
@@ -103,19 +107,25 @@ def test_init_template(
         assert Path("alien-clones") / "LICENSE" in project_files
 
 
-def test_init_template_tests(cookie_path: Path, cookie_context: dict[str, str]) -> None:
+def test_template_suite(
+    cookie_base_path: Path,
+    cookie_context: dict[str, str],
+) -> None:
     """Expect that the test suite passes for the initialized template."""
+    parent = cookie_base_path / "suite"
     cookiecutter(
         template=str(TEMPLATE),
         no_input=True,
-        output_dir=cookie_path,
+        output_dir=parent,
         extra_context={
             **cookie_context,
             "dev_platform": "GitHub",
             "license": "MIT",
         },
     )
-    project_dir = (cookie_path / cookie_context["project_slug"]).resolve(strict=True)
+    project_dir = (parent / cookie_context["project_slug"]).resolve(
+        strict=True,
+    )
 
     # Initialize a git repository such that hatch-vcs can be used.
     repo = Repo.init(project_dir)
@@ -131,39 +141,33 @@ def test_init_template_tests(cookie_path: Path, cookie_context: dict[str, str]) 
     # Run the local test suite.
     try:
         subprocess.run(
-            ["hatch", "run", "install:check"],
+            "hatch run install:check",
             cwd=project_dir,
             check=True,
-            capture_output=True,
             shell=True,
         )
         subprocess.run(
-            [
-                "hatch",
-                "run",
-                f"+py={sys.version_info.major}.{sys.version_info.minor}",
-                "test:run",
-            ],
+            f"hatch run +py={sys.version_info.major}.{sys.version_info.minor} test:run",
             cwd=project_dir,
             check=True,
-            capture_output=True,
             shell=True,
         )
         subprocess.run(
-            ["hatch", "run", "docs:build"],
+            "hatch run docs:build",
             cwd=project_dir,
             check=True,
-            capture_output=True,
             shell=True,
         )
         subprocess.run(
-            ["hatch", "run", "style:check"],
+            "hatch run style:check",
             cwd=project_dir,
             check=True,
-            capture_output=True,
             shell=True,
         )
     except subprocess.CalledProcessError as error:
-        print(error.stdout.decode())  # noqa: T201
-        print(error.stderr.decode())  # noqa: T201
+        logger.error(  # noqa: TRY400
+            "Command = %r; Return code = %d.",
+            error.cmd,
+            error.returncode,
+        )
         raise
