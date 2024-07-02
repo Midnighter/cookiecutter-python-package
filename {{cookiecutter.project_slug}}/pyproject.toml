@@ -14,10 +14,10 @@ requires = ["hatchling", "hatch-vcs"]
 name = "{{ cookiecutter.project_slug }}"
 description = "{{ cookiecutter.project_short_description }}"
 authors = [
-    { name = "{{ cookiecutter.full_name }}", email = "{{ cookiecutter.email }}" }
+    { name = "{{ cookiecutter.full_name }}", email = "{{ cookiecutter.email }}" },
 ]
 maintainers = [
-    { name = "{{ cookiecutter.full_name }}", email = "{{ cookiecutter.email }}" }
+    { name = "{{ cookiecutter.full_name }}", email = "{{ cookiecutter.email }}" },
 ]
 license = "{{ cookiecutter.license }}"
 readme = {"file" = "README.md", "content-type" = "text/markdown"}
@@ -50,7 +50,7 @@ classifiers = [
 keywords = []
 dynamic = ["version"]
 dependencies = [
-    "depinfo ~=2.2"
+    "depinfo ~=2.2",
 ]
 
 [project.urls]
@@ -98,7 +98,7 @@ markers = ["raises"]
 [tool.coverage.paths]
 source = [
     "src/{{ cookiecutter.project_module }}",
-    "*/site-packages/{{ cookiecutter.project_module }}"
+    "*/site-packages/{{ cookiecutter.project_module }}",
 ]
 
 [tool.coverage.run]
@@ -244,6 +244,6 @@ python = ["3.8", "3.12"]
 
 [tool.hatch.envs.test.scripts]
 run = [
-    "pip install .",
+    "python -I -m pip install .",
     "pytest --cov={{ cookiecutter.project_module }} --cov-report=term-missing {args}",
 ]
