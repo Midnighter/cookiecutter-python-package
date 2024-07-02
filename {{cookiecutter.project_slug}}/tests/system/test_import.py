@@ -1,3 +1,6 @@
+"""Test that the package can be imported."""
+
+
 def test_import():
-    """"""
-    import {{ cookiecutter.project_module }}
+    """Test that the package can be imported."""
+    import {{ cookiecutter.project_module }}  # noqa: F401
