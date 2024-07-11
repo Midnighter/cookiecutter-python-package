@@ -89,7 +89,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         python-version: ["3.12"]
-    needs: test
+    needs: [lint, test]
     if: github.ref_type == 'tag'
     permissions:
       contents: write
