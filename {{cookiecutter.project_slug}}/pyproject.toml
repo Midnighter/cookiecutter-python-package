@@ -211,7 +211,7 @@ extra-dependencies = [
 ]
 
 [tool.hatch.envs.docs.scripts]
-build = "mkdocs build --clean --strict"
+build = "mkdocs build {args:--clean --strict}"
 serve = "mkdocs serve"
 
 [tool.hatch.envs.install]
