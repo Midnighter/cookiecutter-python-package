@@ -200,7 +200,7 @@ dependencies = [
 ]
 
 [tool.hatch.envs.types.scripts]
-check = ["mypy src/{{ cookiecutter.project_module }}"]
+check = "mypy src/{{ cookiecutter.project_module }}"
 
 [tool.hatch.envs.docs]
 description = """Build or serve the documentation."""
@@ -212,7 +212,7 @@ extra-dependencies = [
 
 [tool.hatch.envs.docs.scripts]
 build = "mkdocs build {args:--clean --strict}"
-serve = "mkdocs serve"
+serve = "mkdocs serve {args}"
 
 [tool.hatch.envs.install]
 description = """Test the installation the package."""
@@ -225,7 +225,7 @@ detached = true
 [tool.hatch.envs.install.scripts]
 check = [
     "pip check",
-    "hatch build",
+    "hatch build {args:--clean}",
     "twine check dist/*",
 ]
 
