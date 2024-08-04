@@ -231,7 +231,6 @@ check = [
 
 [tool.hatch.envs.test]
 description = """Run the test suite."""
-dev-mode = false
 extra-dependencies = [
     "pytest",
     "pytest-cov",
@@ -244,8 +243,4 @@ extra-dependencies = [
 python = ["3.8", "3.12"]
 
 [tool.hatch.envs.test.scripts]
-# TODO: Decide how to handle changing dependencies.
-run = [
-    "python -I -m pip install --no-deps --force-reinstall .",
-    "pytest --cov={{ cookiecutter.project_module }} --cov-report=term-missing {args}",
-]
+run = "pytest {args:--cov={{ cookiecutter.project_module }} --cov-report=term-missing}"
