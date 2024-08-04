@@ -36,10 +36,9 @@
    to understand details of the package design.
 6. Remove this section from the readme and describe what your package is all
    about.
-7. When you're ready to make a release, perform the following steps.
+7. When you're ready to make a release, perform the following steps:
 
-   1. On [{{ cookiecutter.dev_platform }}]({{ cookiecutter.__dev_platform_url }}) set the secure environment
-      variables `PYPI_USERNAME` and `PYPI_PASSWORD` to `__token__` and a respective PyPI API token.
+   1. [Configure a pending publisher on PyPI](https://docs.pypi.org/trusted-publishers/creating-a-project-through-oidc/).
    2. Tag your latest commit with the desired version and let GitHub handle
       the release.
 
