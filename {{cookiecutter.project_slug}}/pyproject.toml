@@ -191,7 +191,7 @@ extra-dependencies = [
 ]
 
 [tool.hatch.envs.safety.scripts]
-check = ["safety check --full-report"]
+check = "safety check --full-report"
 
 [tool.hatch.envs.types]
 description = """Check the static types of the codebase."""
