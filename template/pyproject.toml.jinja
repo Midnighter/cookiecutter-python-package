@@ -126,6 +126,7 @@ exclude = [
     "S101",  # 'Use of assert detected' ignored because we are using pytest.
     "INP001",  # 'Insecure input' ignored because we are testing.
     "ANN201",  # 'Missing type annotation for {return}' ignored because all tests return `None`.
+    "PLR2004",  # Magic numbers are okay in tests.
 ]
 
 [tool.ruff.lint.isort]
