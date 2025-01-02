@@ -13,7 +13,9 @@ requires = ["hatchling", "hatch-vcs"]
 [project]
 name = "{{ package_name }}"
 dynamic = ["version"]
-description = "{{ package_description }}"
+description = """
+{{ package_description }}
+"""
 authors = [
     { name = "{{ author_name }}", email = "{{ author_email }}" },
 ]
