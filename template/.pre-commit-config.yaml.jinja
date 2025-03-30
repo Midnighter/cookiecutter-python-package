@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: check-case-conflict
       - id: check-ast
@@ -16,17 +16,17 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.8.5
+    rev: v0.11.2
     hooks:
       - id: ruff
         args: ["--fix", "--exit-non-zero-on-fix"]
       - id: ruff-format
   - repo: https://github.com/jsh9/pydoclint
-    rev: 0.5.14
+    rev: 0.6.3
     hooks:
       - id: pydoclint
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.30.0
+    rev: 0.32.1
     hooks:
 {% if dev_platform == "GitHub" %}
       - id: check-github-workflows
@@ -35,7 +35,7 @@ repos:
 {% endif %}
       - id: check-readthedocs
   - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.17
+    rev: 0.7.22
     hooks:
       - id: mdformat
         additional_dependencies:
